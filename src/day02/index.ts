@@ -1,27 +1,32 @@
 import program from './data'
 
-const execute = (noun: number, verb: number) => {
-  const programCopy = [...program]
-  programCopy[1] = noun
-  programCopy[2] = verb
+const applyFunction = (
+  program: number[],
+  position: number,
+  fn: (a: number, b: number) => number
+) => {
+  const a = program[program[position + 1]]
+  const b = program[program[position + 2]]
+  program[program[position + 3]] = fn(a, b)
+}
+
+const execute = (program: number[], noun: number, verb: number) => {
+  program[1] = noun
+  program[2] = verb
   let position = 0
   while (true) {
-    switch (programCopy[position]) {
+    switch (program[position]) {
       case 99:
-        return programCopy[0]
+        return program[0]
       case 1:
-        programCopy[programCopy[position + 3]] =
-          programCopy[programCopy[position + 1]] +
-          programCopy[programCopy[position + 2]]
+        applyFunction(program, position, (a, b) => a + b)
         break
       case 2:
-        programCopy[programCopy[position + 3]] =
-          programCopy[programCopy[position + 1]] *
-          programCopy[programCopy[position + 2]]
+        applyFunction(program, position, (a, b) => a * b)
         break
       default:
         throw new Error(
-          `Invalid value at position ${position}: ${programCopy[position]}`
+          `Invalid value at position ${position}: ${program[position]}`
         )
     }
     position += 4
@@ -30,7 +35,7 @@ const execute = (noun: number, verb: number) => {
 
 for (let noun = 0; noun < 99; noun++) {
   for (let verb = 0; verb < 99; verb++) {
-    const result = execute(noun, verb)
+    const result = execute([...program], noun, verb)
     if (result === 19690720) {
       console.log(100 * noun + verb)
     }
