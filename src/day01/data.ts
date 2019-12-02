@@ -1,4 +1,4 @@
-module.exports = `
+export default `
 115175
 57676
 60193
@@ -99,4 +99,7 @@ module.exports = `
 126892
 74203
 103766
-`.trim().split(/\s+/).map(Number)
+`
+  .trim()
+  .split(/\s+/)
+  .map(Number)

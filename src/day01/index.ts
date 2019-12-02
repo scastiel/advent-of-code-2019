@@ -7,12 +7,12 @@ const calculateFuelForMassRecursively = (mass: number) => {
   return fuel <= 0 ? 0 : fuel + calculateFuelForMassRecursively(fuel)
 }
 
-const calculateFuel = (masses: number[]) =>
-  // First puzzle:
-  // masses.map(calculateFuelForMass)
-  // Second puzzle:
+const calculateFuel = (masses: number[]) => masses.map(calculateFuelForMass)
+
+const calculateFuelRecursively = (masses: number[]) =>
   masses.map(calculateFuelForMassRecursively)
 
 const sum = (masses: number[]) => masses.reduce((acc, mass) => acc + mass)
 
-console.log(sum(calculateFuel(masses)))
+console.log('Not recursively:', sum(calculateFuel(masses)))
+console.log('Recursively:', sum(calculateFuelRecursively(masses)))
